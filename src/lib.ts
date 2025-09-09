@@ -26,4 +26,36 @@ export function shuffleArray(array: number[]) {
     return shuffled;
 }
 
+const barColors = {
+  default: "bg-amber-400",
+  comparing: "bg-blue-500",
+  swapping: "bg-red-500",
+  extra: "bg-green-500",
+} as const; // 'as const' para mayor precisión
+
+type BarColorKeys = keyof typeof barColors;
+
+export class BarElement {
+  element: HTMLElement;
+  constructor(element: HTMLElement) {
+    this.element = element;
+  }
+
+  get height() {
+    return parseInt(this.element.style.height);
+  }
+
+  set height(h: number) {
+    this.element.style.height = `${h}px`;
+  }
+
+  set color(color: BarColorKeys) {
+    this.element.classList.add(barColors[color]);
+  }
+
+  removeColor(color: BarColorKeys) {
+    this.element.classList.remove(barColors[color]);
+  }
+}
+
 export const height = (elements: HTMLElement[], i: number) => parseInt(elements[i].style.height)

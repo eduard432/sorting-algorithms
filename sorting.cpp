@@ -64,6 +64,7 @@ void Sort::insertionSort(int arr[], int size) {
 void Sort::mergeSort(int arr[], int size) {
     int* aux = new int[size];
     mergeSort(arr, 0, size - 1, aux);
+    delete[] aux;
 }
 
 void Sort::mergeSort(int arr[], int start, int end, int* aux) {
@@ -95,20 +96,44 @@ void Sort::merge(int arr[], int start, int middle, int end, int* aux) {
     }
 
     if(i > middle) {
-        for(; j < end; j++) {
+        for(; j <= end; j++) {
             aux[k] = arr[j];
             k++;
         }
     } else {
-        for(; i < middle; i++) {
+        for(; i <= middle; i++) {
             aux[k] = arr[i];
             k++;
         }
     }
 
-    for(int m = start; m < (end-start); m++) {
+    for(int m = start; m <= (end); m++) {
         arr[m] = aux[m];
     }
+}
+
+void Sort::quickSort(int arr[], int size) {
+    if(size<=1) return;
+    Sort::quickSort(arr, 0, size - 1);
+}
+
+void Sort::quickSort(int arr[], int start, int end) {
+    if(start < end) {
+        int pivot = partition(arr, start, end);
+        quickSort(arr, start, pivot - 1);
+        quickSort(arr, pivot + 1, end);
+    }
+}
+
+int Sort::partition(int arr[], int start, int end) {
+    int pivot = arr[start];
+    int index = start - 1;
+    for (int i = start; i < end; i++) {
+        if(arr[i] <= pivot) {
+            index++;
+        }
+    }
+
 }
 
 void Sort::printArray(int arr[], int size) {
